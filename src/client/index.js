@@ -1,27 +1,27 @@
 import React from 'react'
-// import ReactDom from 'react-dom'
-import { render } from "react-dom";
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'                                                                                                                                                    
+import store from "./store/store"
+import HomeContainer from './containers/HomeContainer'
 // import createLogger from 'redux-logger'
 // import thunk from 'redux-thunk'
 // import { createStore } from 'redux'
-import { Provider } from 'react-redux'                                                                                                                                                    
 // import {storeStateMiddleWare} from './middleware/storeStateMiddleWare'
 // import rootReducer from './reducers/index.js'
-import App from './containers/app'
+// import App from './containers/app'
 // import {alert} from './actions/alert'
-import store from "./store/index";
-import * as event from "./constants/eventHandler.js";
-import {updateTetri} from "./actions/update_tetri.js";
+// import * as event from "./constants/eventHandler.js";
 
 // import io from 'socket.io-client';
 // const socket = io.connect('http://localhost:3000')
 
-render((
-  <Provider store={store}>
-    <App/>
-  </Provider>
-), document.getElementById('tetris'))
+const unsubscribe = store.subscribe(() => {
+  console.log(store.getState())
+})
 
-//window.setInterval(() => {store.dispatch(updateTetri());} , 1000);
-//window.setInterval(event.update(), 1000);
-//window.addEventListener('keydown', e => event.keyHandler(e), false);
+ReactDOM.render(
+  <Provider store={store}>
+    <HomeContainer/>
+  </Provider>
+, document.getElementById('app'))
+

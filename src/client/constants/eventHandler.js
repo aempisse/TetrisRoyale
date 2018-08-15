@@ -2,7 +2,7 @@ import {updateTetri} from "../actions/update_tetri.js";
 import {moveRight} from "../actions/moveRight.js";
 import {moveLeft} from "../actions/moveLeft.js";
 import {moveRot} from "../actions/moveRot.js";
-import store from "../store/index";
+import store from "../store/store.js";
 
 const keyLeft = 65;
 const keyUp = 87;

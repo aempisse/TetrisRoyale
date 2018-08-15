@@ -1,6 +1,5 @@
 import React from "react"
-import ListObj from "./listObj.js";
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 
 
 const mapStateToProps = (state) => {

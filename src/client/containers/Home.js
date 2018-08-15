@@ -2,7 +2,7 @@ import React from "react";
 import CreateGameButton from "../components/CreateGame.js";
 import GameList from "../components/GameList.js";
 import { connect } from "react-redux";
-import store from "../store/index.js";
+import store from "../store/store.js";
 
 const mapStateToProps = (state) => {
     return ({UserNameState: state.userName});

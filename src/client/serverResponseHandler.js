@@ -1,21 +1,15 @@
-import store from "./store/index.js"
-import * as nameForm from "./actions/nameForm.js";
-import {updateGameList} from "./actions/updateGameList.js";
+import store from "./store/store"
+import action from "./actions/actionsCreator"
 
 const register = (playerName) => {
-    store.dispatch(nameForm.updateUserName(playerName));
+    store.dispatch(action.updatePlayerName(playerName));
 }
 
 const gameList = (gameList) => {
-    store.dispatch(updateGameList(gameList));
-}
-
-const newGame = (newGame) => {
-    newGame = newGame
+    store.dispatch(action.updateGameList(gameList));
 }
 
 export default {
     register,
-    gameList,
-    newGame
+    gameList
 }
