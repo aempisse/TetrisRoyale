@@ -1,4 +1,6 @@
-var path = require('path');
+const path = require('path')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const CleanWebpackPlugin = require("clean-webpack-plugin")
 
 module.exports = {
   entry: './src/client/index.js',
@@ -13,15 +15,19 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query:{
-          presets: ["env", "react"]
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       }
     ]
-  }
-};
+  },
+  
+  plugins: [
+    new CleanWebpackPlugin(["dist"]),
+    new HtmlWebpackPlugin({
+      template: "./src/client/index.html"
+    })
+  ]
+}
