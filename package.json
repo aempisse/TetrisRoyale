@@ -12,6 +12,7 @@
     "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "
   },
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "immutable": "^3.8.2",
     "lodash": "^4.17.10",

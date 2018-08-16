@@ -1,18 +1,20 @@
-const updatePlayerName = (playerName) => {
+const registerPlayer = (data) => {
     return {
-        type: 'UPDATE_PLAYERNAME',
-        playerName: playerName
+        type: 'SERVER/REGISTER_PLAYER',
+        data
     }
 }
 
-const updateGameList = (gameList) => {
+const getGames = (data) => {
     return {
-        type: 'UPDATE_GAME_LIST',
-        gameList: gameList
+        type: 'SERVER/GET_GAMES',
+        data
     }
 }
 
 export default {
-    updatePlayerName,
-    updateGameList
+    // updatePlayerName,
+    // updateGameList,
+    registerPlayer,
+    getGames
 }

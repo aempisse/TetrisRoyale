@@ -1,7 +1,8 @@
 import React from 'react'
-import {register, gameList} from "../socketClient.js"
+import {connect} from 'react-redux'
+import action from '../actions/actionsCreator'
 
-const NameForm = () => {
+const PlayerNameForm = ({playerName, registerPlayer}) => {
 	let input
 
   	return (
@@ -12,8 +13,7 @@ const NameForm = () => {
 				if (!input.value.trim()) {
 					return
 				}
-				register(input.value)
-				gameList()
+				registerPlayer(input.value)
 			}}
 		>
 			<label htmlFor="inputName">
@@ -31,4 +31,16 @@ const NameForm = () => {
   )
 }
 
-export default NameForm
+const mapStateToProps = (state) => {
+	return {
+		playerName: state.playerName
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		registerPlayer: (data) => dispatch(action.registerPlayer(data))
+	}
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerNameForm)

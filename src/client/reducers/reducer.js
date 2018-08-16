@@ -3,7 +3,7 @@ import {combineReducers} from 'redux'
 const playerName = (state = '', action) => {
 	switch (action.type) {
 		case 'UPDATE_PLAYERNAME':
-			return action.playerName
+			return action.data
 		default:
 			return state
 	}
@@ -11,8 +11,8 @@ const playerName = (state = '', action) => {
 
 const gameList = (state = [], action) => {
 	switch (action.type) {
-		case 'UPDATE_GAME_LIST':
-			return action.gameList
+		case 'UPDATE_GAMELIST':
+			return action.data
 		default:
 			return state
 	}

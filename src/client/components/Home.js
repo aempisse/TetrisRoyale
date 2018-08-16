@@ -1,12 +1,19 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import PlayerNameForm from './PlayerNameForm'
-import GameListContainer from '../containers/GameListContainer'
+import GameList from '../components/GameList'
 
 const Home = ({playerName}) => {
     if (playerName !== '')
-        return <GameListContainer playerName={playerName} />
+        return <GameList />
     else
         return <PlayerNameForm /> 
 }
 
-export default Home
+const mapStateToProps = state => {
+    return {
+        playerName: state.playerName
+    }
+}
+
+export default connect(mapStateToProps)(Home)

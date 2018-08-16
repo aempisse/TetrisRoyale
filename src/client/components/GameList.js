@@ -1,5 +1,6 @@
 import React from "react"
-import request from '../socketClient'
+import {connect} from 'react-redux'
+import action from '../actions/actionsCreator'
 
 const PlayerListItem = ({player}) => {
     return <li>{player.playerName}</li>
@@ -40,8 +41,8 @@ const GameListItem = ({game}) => {
     )
 }
 
-const GameList = ({gameList, playerName}) => {
-    // request.gameList()
+const GameList = ({gameList, playerName, getGames}) => {
+    getGames()
     const list = gameList.map(game =>
         <GameListItem key={game.id} game={game} />
     )
@@ -55,4 +56,17 @@ const GameList = ({gameList, playerName}) => {
     )
 }
 
-export default GameList
+const mapStateToProps = state => {
+    return {
+        playerName: state.playerName,
+        gameList: state.gameList
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getGames: () => dispatch(action.getGames())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameList)
