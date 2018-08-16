@@ -4,8 +4,8 @@
   "author": "aempisse",
   "license": "MIT",
   "scripts": {
-    "srv-dev": "babel-watch -w src src/server/server.js",
-    "client-dev": "webpack-dev-server --mode development --progress --colors --hot --inline",
+    "srv-dev": "clear && babel-watch -w src src/server/server.js",
+    "client-dev": "clear && webpack-dev-server --mode development --progress --colors --hot --inline",
     "srv-dist": "babel src/server --out-dir dist && node dist/server/server.js",
     "client-dist": "webpack --mode production --progress --colors",
     "test": "mocha --recursive --require babel-core/register --reporter spec",

@@ -1,24 +1,58 @@
 import React from "react"
-import { connect } from "react-redux"
+import request from '../socketClient'
 
-
-const mapStateToProps = (state) => {
-    return ({GameList: state.ListGame});
+const PlayerListItem = ({player}) => {
+    return <li>{player.playerName}</li>
 }
 
-const  ListGame = (props) => {
-    if (props.gameList.length === 0)
-        return (<div>Aucune Partie trouvé</div>)
-    let list = props.gameList.map((obj, index) => <div key={index}><ListObj index={index} data={obj} /></div>);
-    return (<div>{list}</div>);
-}
+const ButtonWrapper = (props) => {
+    const handleClick = (e) => {
+        e.preventDefault()
+        console.log(props.game.id)
+    }
 
-const GameList = ({GameList}) => {
     return (
-        <div style={{border: 'solid red 1px', width: '300px', height: '500px'}}>
-            <ListGame gameList={GameList}/>
-        </div>
-    );
+        <button onClick={handleClick}>
+            {props.children}
+        </button>
+    )
 }
 
-export default connect(mapStateToProps)(GameList);
+const GameListItem = ({game}) => {
+    const playerList = game.players.map(player => 
+        <PlayerListItem key={player.id} player={player} />
+    )
+
+    return (
+        <li>
+            <ButtonWrapper game={game}>
+                <div>
+                    Game #{game.id}
+                </div>
+                <div>
+                    Players :
+                    <ul>
+                        {playerList}
+                    </ul>
+                </div>
+            </ButtonWrapper>
+        </li>
+    )
+}
+
+const GameList = ({gameList, playerName}) => {
+    // request.gameList()
+    const list = gameList.map(game =>
+        <GameListItem key={game.id} game={game} />
+    )
+
+    return (
+        <ul>
+            <h2>Hello {playerName} !</h2>
+            <h3>List of games</h3>
+            {list}
+        </ul>
+    )
+}
+
+export default GameList

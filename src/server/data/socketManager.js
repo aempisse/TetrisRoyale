@@ -1,12 +1,7 @@
 class SocketManager {
 
     constructor() {
-        this.io = undefined
         this.sockets = new Map()
-    }
-
-    addIO(io) {
-        this.io = io
     }
 
     addSocket(socket) {

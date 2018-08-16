@@ -1,10 +1,10 @@
 import React from 'react'
 import PlayerNameForm from './PlayerNameForm'
-import GameList from './GameList'
+import GameListContainer from '../containers/GameListContainer'
 
 const Home = ({playerName}) => {
     if (playerName !== '')
-        return <GameList />
+        return <GameListContainer playerName={playerName} />
     else
         return <PlayerNameForm /> 
 }

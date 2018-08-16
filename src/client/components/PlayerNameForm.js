@@ -1,5 +1,5 @@
 import React from 'react'
-import {register} from "../socketClient.js"
+import {register, gameList} from "../socketClient.js"
 
 const NameForm = () => {
 	let input
@@ -13,6 +13,7 @@ const NameForm = () => {
 					return
 				}
 				register(input.value)
+				gameList()
 			}}
 		>
 			<label htmlFor="inputName">
