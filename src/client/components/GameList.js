@@ -41,8 +41,8 @@ const GameListItem = ({game}) => {
     )
 }
 
-const GameList = ({gameList, playerName, getGames}) => {
-    getGames()
+const GameList = ({gameList, playerName}) => {
+    // getGames()
     const list = gameList.map(game =>
         <GameListItem key={game.id} game={game} />
     )
@@ -65,7 +65,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getGames: () => dispatch(action.getGames())
+        // getGames: () => dispatch(action.getGames())
     }
 }
 

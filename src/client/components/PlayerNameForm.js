@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import action from '../actions/actionsCreator'
 
-const PlayerNameForm = ({playerName, registerPlayer}) => {
+const PlayerNameForm = ({playerName, registerPlayer, getGames}) => {
 	let input
 
   	return (
@@ -14,6 +14,7 @@ const PlayerNameForm = ({playerName, registerPlayer}) => {
 					return
 				}
 				registerPlayer(input.value)
+				getGames()
 			}}
 		>
 			<label htmlFor="inputName">
@@ -39,7 +40,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		registerPlayer: (data) => dispatch(action.registerPlayer(data))
+		registerPlayer: (data) => dispatch(action.registerPlayer(data)),
+        getGames: () => dispatch(action.getGames())
 	}
 } 
 
