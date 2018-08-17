@@ -4,8 +4,8 @@ import socketManager from './data/socketManager'
 export default (socket) => {
     socketManager.addSocket(socket)
 
-    socket.on('REGISTER_PLAYER', (data) => handleRegister(data, socket))
-    socket.on('GET_GAMES', (data) => handleGetGames(data, socket))
+    socket.on('SERVER/REGISTER_PLAYER', (data) => handleRegister(data, socket))
+    socket.on('SERVER/GET_GAMES', (data) => handleGetGames(data, socket))
 }
 
 const handleGetGames = (data, socket) => {

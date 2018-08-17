@@ -3,8 +3,7 @@ const socketMiddleware = socket => store => {
         socket.on('action', store.dispatch)
     return next => action => {
         if(socket && action.type && action.type.startsWith('SERVER')) {
-            const serverAction = action.type.split('/')[1]
-            socket.emit(serverAction, action.data)
+            socket.emit(action.type, action.data)
         }
         return next(action)
     }
