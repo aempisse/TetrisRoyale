@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import thunkMiddleware from 'redux-thunk'
 import socketMiddleware from './middlewares/socketMiddleware'
@@ -15,7 +16,7 @@ const configureStore = (preloadedState) => {
         socketMiddleware(socket),
         thunkMiddleware
     ]
-    if (process.env === 'development')
+    if (process.env !== 'production')
         middlewares.push(loggerMiddleware)
 
     const middlewareEnhancer = applyMiddleware(...middlewares)
@@ -24,7 +25,11 @@ const configureStore = (preloadedState) => {
         middlewareEnhancer,
         monitorReducerEnhancer
     ]
-    const composedEnhancer = compose(...enhancers)
+    let composedEnhancer
+    if (process.env !== 'production')
+        composedEnhancer = composeWithDevTools(...enhancers)
+    else
+        composedEnhancer = compose(...enhancers)
 
     const store = createStore(reducer, preloadedState, composedEnhancer)
 
