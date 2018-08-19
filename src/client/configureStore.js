@@ -33,6 +33,9 @@ const configureStore = (preloadedState) => {
 
     const store = createStore(reducer, preloadedState, composedEnhancer)
 
+    if (socket)
+        socket.on('action', store.dispatch)
+
     return store
 }
 

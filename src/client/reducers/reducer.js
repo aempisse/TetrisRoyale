@@ -1,5 +1,9 @@
 import {combineReducers} from 'redux'
 
+/**
+ * @param {string} state 
+ * @param {object} action
+ */
 const playerName = (state = '', action) => {
 	switch (action.type) {
 		case 'UPDATE_PLAYERNAME':
@@ -9,6 +13,36 @@ const playerName = (state = '', action) => {
 	}
 }
 
+/**
+ * @param {boolean} state 
+ * @param {object} action 
+ */
+const inGame = (state = false, action) => {
+	switch (action.type) {
+		case 'JOIN_GAME':
+			return action.data.inGame
+		default:
+			return state
+	}
+}
+
+/**
+ * @param {object} state 
+ * @param {object} action 
+ */
+const game = (state = {}, action ) => {
+	switch (action.type) {
+		case 'JOIN_GAME':
+			return action.data.game
+		default:
+			return state
+	}
+}
+
+/**
+ * @param {Array} state 
+ * @param {object} action 
+ */
 const gameList = (state = [], action) => {
 	switch (action.type) {
 		case 'UPDATE_GAMELIST':
@@ -20,6 +54,8 @@ const gameList = (state = [], action) => {
 
 const reducer = combineReducers({
 	playerName,
+	inGame,
+	game,
 	gameList
 })
 

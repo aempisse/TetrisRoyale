@@ -1,6 +1,5 @@
 import React from "react"
 import {connect} from 'react-redux'
-import action from '../actions/actionsCreator'
 
 const PlayerListItem = ({player}) => {
     return <li>{player.playerName}</li>
@@ -41,15 +40,13 @@ const GameListItem = ({game}) => {
     )
 }
 
-const GameList = ({gameList, playerName}) => {
-    // getGames()
+const GameList = ({gameList}) => {
     const list = gameList.map(game =>
         <GameListItem key={game.id} game={game} />
     )
 
     return (
         <ul>
-            <h2>Hello {playerName} !</h2>
             <h3>List of games</h3>
             {list}
         </ul>
@@ -58,15 +55,8 @@ const GameList = ({gameList, playerName}) => {
 
 const mapStateToProps = state => {
     return {
-        playerName: state.playerName,
         gameList: state.gameList
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        // getGames: () => dispatch(action.getGames())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameList)
+export default connect(mapStateToProps)(GameList)
