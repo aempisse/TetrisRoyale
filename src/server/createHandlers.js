@@ -28,7 +28,7 @@ const handleGetGames = (data, socket, gameManager) => {
 }
 
 /**
- * @param {string} data - playerName 
+ * @param {string} data - playerName
  * @param {object} socket
  */
 const handleRegister = (data, socket, socketManager) => {
@@ -37,7 +37,7 @@ const handleRegister = (data, socket, socketManager) => {
     socketManager.registerSocket(socket, data)
 
     console.log('client registered:', data)
-    
+
     socket.emit('action', {
         type: 'UPDATE_PLAYERNAME',
         data
@@ -84,12 +84,14 @@ const handleCreateGame = (data, socket, io, gameManager) => {
  * @param {object} io
  */
 const handleDisconnect = (socket, io, socketManager, gameManager) => {
-    const game = gameManager.getGameBySocket(socket)
-    if (game) {
+    let game = null
+    while (game = gameManager.getGameBySocket(socket)) {
         gameManager.removePlayerFromGame(socket, game)
+    }
+    if (game !== null) {
         const gameList = gameManager.getGameList()
         console.log(`new gameList: ${gameList}`)
-    
+
         io.emit('action', {
             type: 'UPDATE_GAMELIST',
             data: gameList
