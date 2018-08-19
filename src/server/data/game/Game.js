@@ -18,17 +18,19 @@ export default class Game {
         }
     }
 
-    getPlayerById(id) {
-        return this.players.find(player => player.id === id)
+    removePlayer(id) {
+        if (!id || this.players.length === 0)
+            return
+
+        const remainingPlayers = this.players.filter(player => player.id !== id)
+        this.players = remainingPlayers
     }
 
-    // removePlayer(playerName) {
-    //     const player = this.players.find(e => e.playerName === playerName)
-    //     if (player) {
-    //         this.players.delete(player)
-
-    //         return player
-    //     }
-    // }
+    getPlayerById(id) {
+        if (!id)
+            return undefined
+            
+        return this.players.find(player => player.id === id)
+    }
 
 }

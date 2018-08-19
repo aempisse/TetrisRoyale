@@ -19,8 +19,39 @@ class GameManager {
 		return newGame
 	}
 
+	removeGame(id) {
+		if (!id || this.games.length === 0)
+			return
+
+		const remainingGames = this.games.filter(game => game.id !== id)
+		this.games = remainingGames
+	}
+
+	removePlayerFromGame(socket, game) {
+		if (!socket || !game || this.getGame(game.id) === undefined)
+			return
+
+		this.getGame(game.id).removePlayer(socket.id)
+		if (this.getGame(game.id).players.length === 0)
+			this.removeGame(game.id)
+	}
+
 	getGame(id) {
+		if (!id)
+			return undefined
+			
 		return this.games.find(game => game.id === id)
+	}
+
+	getGameBySocket(socket) {
+		if (!socket)
+			return undefined
+
+		return this.games.find(game => 
+			game.players.find(player => 
+				player.id === socket.id
+			)
+		)
 	}
 
 	getGameList() {

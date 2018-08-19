@@ -5,19 +5,24 @@ class SocketManager {
     }
 
     addSocket(socket) {
-        this.sockets.set(socket.id, { socket })
+        this.sockets.set(socket.id, '')
     }
 
-    registerSocket(socket, userName) {
-        this.sockets.set(socket.id, { socket, userName })
+    registerSocket(socket, playerName) {
+        this.sockets.set(socket.id, playerName)
     }
 
     removeSocket(socket) {
         this.sockets.delete(socket.id)
     }
 
-    getSocketByUserName(userName) {
-        return (this.sockets.find(socket => socket.userName === userName))
+    getSocketByPlayerName(playerName) {
+        const entry = this.sockets.entries().find(pair => pair[1] === playerName)
+        return entry[0]
+    }
+
+    getPlayerNameBySocket(socket) {
+        return this.sockets.get(socket.id)
     }
 }
 

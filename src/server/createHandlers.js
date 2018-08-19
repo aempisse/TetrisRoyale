@@ -1,22 +1,22 @@
-import gameManager from './data/game/gameManager'
-import socketManager from './data/socketManager'
-
-export default (socket, io) => {
+export default (socket, io, gameManager, socketManager) => {
     socketManager.addSocket(socket)
 
-    socket.on('SERVER/REGISTER_PLAYER', (data) => handleRegister(data, socket))
-    socket.on('SERVER/GET_GAMES', (data) => handleGetGames(data, socket))
-    socket.on('SERVER/CREATE_GAME', (data) => handleCreateGame(data, socket, io))
+    socket.on('SERVER/GET_GAMES',
+        (data) => handleGetGames(data, socket, gameManager))
+    socket.on('SERVER/REGISTER_PLAYER',
+        (data) => handleRegister(data, socket, socketManager))
+    socket.on('SERVER/CREATE_GAME',
+        (data) => handleCreateGame(data, socket, io, gameManager))
 
-    // socket.on('disconnect', () => handleDisconnect(socket))
+    socket.on('disconnect',
+        () => handleDisconnect(socket, io, socketManager, gameManager))
 }
-
 
 /**
  * @param {undefined} data
  * @param {object} socket
  */
-const handleGetGames = (data, socket) => {
+const handleGetGames = (data, socket, gameManager) => {
     const gameList = gameManager.getGameList()
 
     console.log('gameList requested')
@@ -31,7 +31,7 @@ const handleGetGames = (data, socket) => {
  * @param {string} data - playerName 
  * @param {object} socket
  */
-const handleRegister = (data, socket) => {
+const handleRegister = (data, socket, socketManager) => {
     if (!data)
         return
     socketManager.registerSocket(socket, data)
@@ -46,12 +46,13 @@ const handleRegister = (data, socket) => {
 
 /**
  * @param {string} data - playerName
- * @param {socket} socket
+ * @param {object} socket
  * @param {object} io
  */
-const handleCreateGame = (data, socket, io) => {
-    if (!data)
+const handleCreateGame = (data, socket, io, gameManager) => {
+    if (!data || !socket || !io)
         return
+
     const newGame = gameManager.addGame()
     newGame.addPlayer(data, socket.id)
     socket.join(newGame.id)
@@ -70,7 +71,7 @@ const handleCreateGame = (data, socket, io) => {
     })
 
     const gameList = gameManager.getGameList()
-    console.log('new gameList', gameList)
+    console.log(`new gameList: ${gameList}`)
 
     io.emit('action', {
         type: 'UPDATE_GAMELIST',
@@ -78,6 +79,25 @@ const handleCreateGame = (data, socket, io) => {
     })
 }
 
-// const handleDisconnect = (socket) => {
-//     gameManager.removePlayer(socket.id)
-// }
+/**
+ * @param {object} socket
+ * @param {object} io
+ */
+const handleDisconnect = (socket, io, socketManager, gameManager) => {
+    const game = gameManager.getGameBySocket(socket)
+    if (game) {
+        gameManager.removePlayerFromGame(socket, game)
+        const gameList = gameManager.getGameList()
+        console.log(`new gameList: ${gameList}`)
+    
+        io.emit('action', {
+            type: 'UPDATE_GAMELIST',
+            data: gameList
+        })
+    }
+
+    const playerName = socketManager.getPlayerNameBySocket(socket) || 'unnamed'
+    socketManager.removeSocket(socket)
+    console.log(`player ${playerName} (socket: ${socket.id}) disconnected`)
+
+}
