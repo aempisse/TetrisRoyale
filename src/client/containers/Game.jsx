@@ -1,12 +1,23 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-const Game = ({}) => {
+const Game = ({game}) => {
     return (
         <React.Fragment>
-            
+            <div>
+                Game #{game.id}
+            </div>
+            <ul>
+                {game.players.map(player => <li key={player.id} >{player.playerName}</li>)}
+            </ul>
         </React.Fragment>
     )
 }
 
-export default Game
+const mapStateToProps = state => {
+    return {
+        game: state.game
+    }
+}
+
+export default connect(mapStateToProps)(Game)

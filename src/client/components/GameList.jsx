@@ -1,21 +1,9 @@
 import React from "react"
-import {connect} from 'react-redux'
+import {connect} from "react-redux"
+import JoinGame from "./JoinGame"
 
 const PlayerListItem = ({player}) => {
     return <li>{player.playerName}</li>
-}
-
-const ButtonWrapper = (props) => {
-    const handleClick = (e) => {
-        e.preventDefault()
-        console.log(props.game.id)
-    }
-
-    return (
-        <button onClick={handleClick}>
-            {props.children}
-        </button>
-    )
 }
 
 const GameListItem = ({game}) => {
@@ -25,7 +13,7 @@ const GameListItem = ({game}) => {
 
     return (
         <li>
-            <ButtonWrapper game={game}>
+            <JoinGame game={game}>
                 <div>
                     Game #{game.id}
                 </div>
@@ -35,7 +23,7 @@ const GameListItem = ({game}) => {
                         {playerList}
                     </ul>
                 </div>
-            </ButtonWrapper>
+            </JoinGame>
         </li>
     )
 }
@@ -59,4 +47,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(GameList)
+export default connect(mapStateToProps, undefined)(GameList)

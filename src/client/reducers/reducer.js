@@ -14,26 +14,13 @@ const playerName = (state = '', action) => {
 }
 
 /**
- * @param {boolean} state 
- * @param {object} action 
- */
-const inGame = (state = false, action) => {
-	switch (action.type) {
-		case 'JOIN_GAME':
-			return action.data.inGame
-		default:
-			return state
-	}
-}
-
-/**
  * @param {object} state 
  * @param {object} action 
  */
 const game = (state = {}, action ) => {
 	switch (action.type) {
-		case 'JOIN_GAME':
-			return action.data.game
+		case 'UPDATE_GAME':
+			return action.data
 		default:
 			return state
 	}
@@ -54,7 +41,6 @@ const gameList = (state = [], action) => {
 
 const reducer = combineReducers({
 	playerName,
-	inGame,
 	game,
 	gameList
 })

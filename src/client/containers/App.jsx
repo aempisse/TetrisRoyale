@@ -3,21 +3,20 @@ import { connect } from 'react-redux'
 import Home from './Home'
 import Game from './Game'
 
-const App = ({inGame}) => {
+const App = ({game}) => {
 	return (
-		// <React.Fragment>
-		// 	{ inGame ?
-		// 		<Home /> :
-		// 		<Game />	
-		// 	}
-		// </React.Fragment>
-		<Home />
+		<React.Fragment>
+			{ Object.keys(game).length === 0 ?
+				<Home /> :
+				<Game />
+			}
+		</React.Fragment>
 	)
 }
 
 const mapStateToProps = (state) => {
 	return {
-		inGame: state.inGame
+		game: state.game
 	}
 }
 

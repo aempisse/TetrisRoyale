@@ -5,8 +5,8 @@ import CreateGame from '../components/CreateGame'
 import GameList from '../components/GameList'
 import action from '../actions/actionsCreator'
 
-const Home = ({getGames}) => {
-    getGames()
+const Home = ({getGameList}) => {
+    getGameList()
     return (
         <React.Fragment>
             <PlayerName />
@@ -18,7 +18,7 @@ const Home = ({getGames}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getGames: () => dispatch(action.getGames())
+        getGameList: () => dispatch(action.getGameList())
     }
 }
 

@@ -2,16 +2,29 @@
 /**
  * @param {Array} data - gameList
  */
-const updateGamelist = data => {
+const updateGameList = data => {
     return {
         type: 'UPDATE_GAMELIST',
         data
     }
 }
 
-const updatePlayername = data => {
+/**
+ * @param {string} data - playerName 
+ */
+const updatePlayerName = data => {
     return {
         type: 'UPDATE_PLAYERNAME',
+        data
+    }
+}
+
+/**
+ * @param {object} data - game
+ */
+const updateGame = data => {
+    return {
+        type: 'UPDATE_GAME',
         data
     }
 }
@@ -30,7 +43,6 @@ const registerPlayer = data => {
  * @param {string} data - playerName
  */
 const createGame = data => {
-    // data: playerName
     return {
         type: 'SERVER/CREATE_GAME',
         data
@@ -38,18 +50,32 @@ const createGame = data => {
 }
 
 /**
+ * @param {string} data.playerName - playerName
+ * @param {string} data.gameId - gameId 
+ */
+const joinGame = data => {
+    return {
+        type: 'SERVER/JOIN_GAME',
+        data
+    }
+}
+
+/**
  * @param {undefined} data
  */
-const getGames = data => {
+const getGameList = data => {
     return {
-        type: 'SERVER/GET_GAMES',
+        type: 'SERVER/GET_GAMELIST',
         data
     }
 }
 
 export default {
-    updateGamelist,
+    updateGameList,
+    updatePlayerName,
+    updateGame,
     registerPlayer,
     createGame,
-    getGames
+    joinGame,
+    getGameList
 }
