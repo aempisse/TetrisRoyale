@@ -12,7 +12,7 @@
     "client-dev": "clear && webpack-dev-server --mode development --progress --colors --hot --inline",
     "srv-dist": "babel src/server --out-dir dist && node dist/server/server.js",
     "client-dist": "webpack --mode production --progress --colors",
-    "test": "jest --silent",
+    "test": "jest --verbose",
     "test:watch": "npm test -- --watch",
     "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "
   },

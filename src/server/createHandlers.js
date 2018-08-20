@@ -1,3 +1,5 @@
+import action from '../client/actions/actionsCreator'
+
 export default (socket, io, gameManager, socketManager) => {
     socketManager.addSocket(socket)
 
@@ -24,10 +26,7 @@ const handleGetGames = (data, socket, gameManager) => {
 
     console.log('gameList requested')
 
-    socket.emit('action', {
-        type: 'UPDATE_GAMELIST',
-        data: gameList
-    })
+    socket.emit('action', action.updateGameList(gameList))
 }
 
 /**
@@ -40,10 +39,7 @@ const handleRegister = (data, socket, socketManager) => {
 
     console.log('client registered:', data)
 
-    socket.emit('action', {
-        type: 'UPDATE_PLAYERNAME',
-        data
-    })
+    socket.emit('action', action.updatePlayerName(data))
 }
 
 /**
@@ -57,15 +53,8 @@ const handleCreateGame = (data, socket, io, gameManager) => {
     newGame.addPlayer(data, socket.id)
     socket.join(newGame.id)
 
-    socket.emit('action', {
-        type: 'UPDATE_GAME',
-        data: newGame
-    })
-
-    io.emit('action', {
-        type: 'UPDATE_GAMELIST',
-        data: gameManager.getGameList()
-    })
+    socket.emit('action', action.updateGame(newGame))
+    io.emit('action', action.updateGameList(gameManager.getGameList()))
 }
 
 /**
@@ -83,15 +72,8 @@ const handleJoinGame = (data, socket, io, gameManager) => {
     game.addPlayer(data.playerName, socket.id)
     socket.join(game.id)
 
-    io.in(game.id).emit('action', {
-        type: 'UPDATE_GAME',
-        data: game
-    })
-
-    io.emit('action', {
-        type: 'UPDATE_GAMELIST',
-        data: gameManager.getGameList()
-    })
+    io.in(game.id).emit('action', action.updateGame(game))
+    io.emit('action', action.updateGameList(gameManager.getGameList()))
 }
 
 const handleQuitGame = (data, socket, io, gameManager) => {
@@ -105,20 +87,9 @@ const handleQuitGame = (data, socket, io, gameManager) => {
     gameManager.removePlayerFromGame(socket, game)
     socket.leave(game.id)
 
-    socket.emit('action', {
-        type: 'UPDATE_GAME',
-        data: {}
-    })
-
-    io.in(game.id).emit('action', {
-        type: 'UPDATE_GAME',
-        data: gameManager.getGame(data.gameId)
-    })
-
-    io.emit('action', {
-        type: 'UPDATE_GAMELIST',
-        data: gameManager.getGameList()
-    })
+    socket.emit('action', action.updateGame({}))
+    io.in(game.id).emit('action', action.updateGame(gameManager.getGame(data.gameId)))
+    io.emit('action', action.updateGameList(gameManager.getGameList()))
 }
 
 /**
@@ -127,12 +98,10 @@ const handleDisconnect = (socket, io, socketManager, gameManager) => {
     let game = null
     while (game = gameManager.getGameBySocket(socket)) {
         gameManager.removePlayerFromGame(socket, game)
+        io.in(game.id).emit('action', action.updateGame(gameManager.getGame(data.gameId)))
     }
     if (game !== null) {
-        io.emit('action', {
-            type: 'UPDATE_GAMELIST',
-            data: gameManager.getGameList()
-        })
+        io.emit('action', action.updateGameList(gameManager.getGameList()))
     }
 
     const playerName = socketManager.getPlayerNameBySocket(socket) || 'unnamed'
