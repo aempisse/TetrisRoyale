@@ -106,7 +106,8 @@ const handleQuitGame = (data, socket, io, gameManager) => {
     socket.leave(game.id)
 
     socket.emit('action', {
-        type: 'QUITTED_GAME',
+        type: 'UPDATE_GAME',
+        data: {}
     })
 
     io.in(game.id).emit('action', {
