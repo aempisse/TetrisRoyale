@@ -61,6 +61,17 @@ const joinGame = data => {
 }
 
 /**
+ * @param {string} data.playerName - playerName
+ * @param {string} data.gameId - gameId 
+ */
+const quitGame = data => {
+    return {
+        type: 'SERVER/QUIT_GAME',
+        data
+    }
+}
+
+/**
  * @param {undefined} data
  */
 const getGameList = data => {
@@ -77,5 +88,6 @@ export default {
     registerPlayer,
     createGame,
     joinGame,
+    quitGame,
     getGameList
 }

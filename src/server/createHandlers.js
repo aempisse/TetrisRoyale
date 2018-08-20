@@ -2,13 +2,15 @@ export default (socket, io, gameManager, socketManager) => {
     socketManager.addSocket(socket)
 
     socket.on('SERVER/GET_GAMES',
-        (data) => handleGetGames(data, socket, gameManager))
+        data => handleGetGames(data, socket, gameManager))
     socket.on('SERVER/REGISTER_PLAYER',
-        (data) => handleRegister(data, socket, socketManager))
+        data => handleRegister(data, socket, socketManager))
     socket.on('SERVER/CREATE_GAME',
-        (data) => handleCreateGame(data, socket, io, gameManager))
+        data => handleCreateGame(data, socket, io, gameManager))
     socket.on('SERVER/JOIN_GAME',
-        (data) => handleJoinGame(data, socket, io, gameManager))
+        data => handleJoinGame(data, socket, io, gameManager))
+    socket.on('SERVER/QUIT_GAME',
+        data => handleQuitGame(data, socket, io, gameManager))
 
     socket.on('disconnect',
         () => handleDisconnect(socket, io, socketManager, gameManager))
@@ -84,6 +86,32 @@ const handleJoinGame = (data, socket, io, gameManager) => {
     io.in(game.id).emit('action', {
         type: 'UPDATE_GAME',
         data: game
+    })
+
+    io.emit('action', {
+        type: 'UPDATE_GAMELIST',
+        data: gameManager.getGameList()
+    })
+}
+
+const handleQuitGame = (data, socket, io, gameManager) => {
+    if (!data || !socket || !io || !gameManager)
+        return
+
+    const game = gameManager.getGame(data.gameId)
+    if (game === undefined)
+        return
+
+    gameManager.removePlayerFromGame(socket, game)
+    socket.leave(game.id)
+
+    socket.emit('action', {
+        type: 'QUITTED_GAME',
+    })
+
+    io.in(game.id).emit('action', {
+        type: 'UPDATE_GAME',
+        data: gameManager.getGame(data.gameId)
     })
 
     io.emit('action', {

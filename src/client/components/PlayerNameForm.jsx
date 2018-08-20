@@ -3,7 +3,7 @@ import React from 'react'
 const PlayerNameForm = ({registerPlayer}) => {
 	let input
 
-	const handleSubmit = (e) => {
+	const handleSubmit = e => {
 		e.preventDefault()
 		if (!input.value.trim()) {
 			return

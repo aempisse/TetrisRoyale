@@ -21,6 +21,8 @@ const game = (state = {}, action ) => {
 	switch (action.type) {
 		case 'UPDATE_GAME':
 			return action.data
+		case 'QUITTED_GAME':
+			return ({})
 		default:
 			return state
 	}

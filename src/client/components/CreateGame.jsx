@@ -3,8 +3,13 @@ import {connect} from 'react-redux'
 import action from '../actions/actionsCreator'
 
 const CreateGame = ({playerName, createGame}) => {
+    const handleClick = e => {
+        e.preventDefault()
+        createGame(playerName)
+    }
+    
     return (
-        <button onClick={() => createGame(playerName)}>
+        <button onClick={handleClick}>
             New Game
         </button>
     )

@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import action from "../actions/actionsCreator"
 
 const JoinGame = ({children, game, playerName, joinGame}) => {
-    const handleClick = (e) => {
+    const handleClick = e => {
         e.preventDefault()
         if (playerName !== '')
             joinGame({playerName, gameId: game.id})
