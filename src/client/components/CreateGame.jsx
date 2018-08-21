@@ -1,5 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { ListItem, ListItemText } from '@material-ui/core'
 import action from '../actions/actionsCreator'
 
 const CreateGame = ({playerName, createGame}) => {
@@ -9,9 +10,9 @@ const CreateGame = ({playerName, createGame}) => {
     }
     
     return (
-        <button onClick={handleClick}>
-            New Game
-        </button>
+        <ListItem button onClick={handleClick}>
+            <ListItemText primary="New Game"/>
+        </ListItem>
     )
 }
 

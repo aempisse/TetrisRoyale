@@ -16,7 +16,7 @@ const AppHeader = (props) => {
         <div className={classes.root} >
             <AppBar position="static" >
                 <Toolbar>
-                    <Typography variant="title" color="inherit" >
+                    <Typography variant="display2" color="inherit" >
                         Tetris Royale
                     </Typography>
                 </Toolbar>

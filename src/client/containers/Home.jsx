@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from 'redux'
 import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Grid } from '@material-ui/core'
+import { Paper, Grid, List, Divider } from '@material-ui/core'
 import PlayerName from './PlayerName'
 import CreateGame from '../components/CreateGame'
 import GameList from '../components/GameList'
@@ -13,17 +13,20 @@ const Home = ({getGameList, classes}) => {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={12}>
-				<Grid container className={classes.layout} spacing={32}>
+				<Grid container className={classes.layout}>
 					<Grid item xs={12} className={classes.item}>
 						<Paper className={classes.paper}>
 							<PlayerName />
 						</Paper>
 					</Grid>
 					<Grid item xs={12} className={classes.item}>
-						<CreateGame />
-					</Grid>
-					<Grid item xs={12} className={classes.item}>
-						<GameList />
+						<Paper>
+							<List>
+								<CreateGame />
+								<Divider />
+								<GameList />
+							</List>
+						</Paper>
 					</Grid>
 				</Grid>
             </Grid>
@@ -41,10 +44,13 @@ const styles = {
 		alignItems: 'center'
 	},
 	item: {
-		// margin: '32 0'
+		marginTop: 16
 	},
 	paper: {
-		padding: 32
+		paddingTop: 8,
+		paddingBottom: 8,
+		paddingLeft: 32,
+		paddingRight: 32
 	}
 }
 

@@ -1,50 +1,64 @@
 import React from "react"
 import {connect} from "react-redux"
-import JoinGame from "./JoinGame"
+import { withStyles } from '@material-ui/core/styles'
+import { List, ListItem, ListItemText } from '@material-ui/core'
+import action from '../actions/actionsCreator'
 
 const PlayerListItem = ({player}) => {
-    return <li>{player.playerName}</li>
+    return (
+        <ListItem>
+            <ListItemText primary={player.playerName} />
+        </ListItem>
+    )
 }
 
-const GameListItem = ({game}) => {
+const GameListItem = ({game, playerName, joinGame}) => {
+    const handleClick = () => {
+        console.log('click')
+        if (playerName !== '')
+            joinGame({playerName, gameId: game.id})
+    }
+
     const playerList = game.players.map(player => 
         <PlayerListItem key={player.id} player={player} />
     )
 
+    const primary = "Game #" + game.id
+
     return (
-        <li>
-            <JoinGame game={game}>
-                <div>
-                    Game #{game.id}
-                </div>
-                <div>
-                    Players :
-                    <ul>
-                        {playerList}
-                    </ul>
-                </div>
-            </JoinGame>
-        </li>
+        <ListItem button onClick={handleClick}>
+            <ListItemText primary={primary} secondary="List of players :" />
+                <List>
+                    {playerList}
+                </List>
+        </ListItem>
     )
 }
 
-const GameList = ({gameList}) => {
+const GameList = ({gameList, playerName, joinGame}) => {
+
     const list = gameList.map(game =>
-        <GameListItem key={game.id} game={game} />
+            <GameListItem key={game.id} game={game} playerName={playerName} joinGame={joinGame} />
     )
 
     return (
-        <ul>
-            <h3>List of games</h3>
+        <List>
             {list}
-        </ul>
+        </List>
     )
 }
 
 const mapStateToProps = state => {
     return {
-        gameList: state.gameList
+        gameList: state.gameList,
+        playerName: state.playerName
     }
 }
 
-export default connect(mapStateToProps, undefined)(GameList)
+const mapDispatchToProps = dispatch => {
+    return {
+        joinGame: (data) => dispatch(action.joinGame(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameList)
