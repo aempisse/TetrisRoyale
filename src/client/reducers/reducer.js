@@ -27,6 +27,17 @@ const game = (state = {}, action ) => {
 }
 
 /**
+ * @param {object} state 
+ * @param {object} action 
+ */
+const grid = (state = Array(22).fill(Array(10).fill(0)), action) => {
+	switch (action.type) {
+		default:
+			return state
+	}
+}
+
+/**
  * @param {Array} state 
  * @param {object} action 
  */
@@ -42,6 +53,7 @@ const gameList = (state = [], action) => {
 const reducer = combineReducers({
 	playerName,
 	game,
+	grid,
 	gameList
 })
 

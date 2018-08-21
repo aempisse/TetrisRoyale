@@ -1,6 +1,9 @@
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
-const PlayerNameForm = ({registerPlayer}) => {
+const PlayerNameForm = ({registerPlayer, classes}) => {
 	let input
 
 	const handleSubmit = e => {
@@ -15,19 +18,39 @@ const PlayerNameForm = ({registerPlayer}) => {
 		<form
 			onSubmit={handleSubmit}
 		>
-			<label htmlFor="inputName">
-				Name:
-				<input
-					ref = { node => {
-						input = node
-					}}
-					type="text"
-					name="inputName" 
-				/>
-			</label>
-			<input type="submit" value="OK" />
+			<TextField 
+				inputRef={ node => {
+					input = node
+				}}
+				label='Enter your player name :'
+				helperText="it's required to create or join a game"
+				placeholder='player name'
+				inputProps={{
+					'aria-label': 'Description',
+				  }}
+				className={classes.nameField}
+			/>
+			<Button 
+				variant="contained"
+				color="primary"
+				type="submit"
+				className={classes.submitButton}
+			>
+				OK
+			</Button>
 		</form>
   )
 }
 
-export default PlayerNameForm
+const styles = {
+	nameField: {
+		minWidth: 240
+	},
+	submitButton: {
+		marginLeft: 32
+	}
+}
+
+export default withStyles(styles, {
+	name: 'PlayerNameForm',
+})(PlayerNameForm)

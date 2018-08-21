@@ -2,37 +2,27 @@ import reducer from '../../src/client/reducers/reducer'
 import action from '../../src/client/actions/actionsCreator'
 
 describe('reducer', () => {
+
+    const initialState = {
+        playerName: '',
+        game: {},
+        grid: Array(22).fill(Array(10).fill(0)),
+        gameList: []
+    }
+
     test('should return the initial state', () => {
-        expect(reducer(undefined, {})).toStrictEqual(
-            {
-                playerName: '',
-                game: {},
-                gameList: []
-            }
-        )
+        expect(reducer(undefined, {})).toStrictEqual(initialState)
     })
 
     test('should handle UPDATE_PLAYERNAME', () => {
         expect(reducer(undefined, action.updatePlayerName('test'))).toStrictEqual(
-            {
-                playerName: 'test',
-                game: {},
-                gameList: []
-            }
+            { ...initialState, playerName: 'test' }
         )
 
         expect(reducer(
-            {
-                playerName: 'before',
-                game: {},
-                gameList: []
-            }, action.updatePlayerName('after')))
+            { ...initialState, playerName: 'before'}, action.updatePlayerName('after')))
         .toStrictEqual(
-            {
-                playerName: 'after',
-                game: {},
-                gameList: []
-            }
+            { ...initialState, playerName: 'after'}
         )
     })
 
@@ -47,9 +37,8 @@ describe('reducer', () => {
         ]
 
         expect(reducer(undefined, action.updateGameList(data))).toStrictEqual(
-            {
-                playerName: '',
-                game: {},
+            { 
+                ...initialState,
                 gameList: [
                     {id: '0123', players: [
                         {id: '42', playerName: 'test'}
@@ -62,9 +51,8 @@ describe('reducer', () => {
         )
 
         expect(reducer(
-            {
-                playerName: '',
-                game: {},
+            { 
+                ... initialState,
                 gameList: [
                     {id: '0123', players: [
                         {id: '42', playerName: 'test'}
@@ -72,9 +60,8 @@ describe('reducer', () => {
                 ]
             }, action.updateGameList(data)))
         .toStrictEqual(
-            {
-                playerName: '',
-                game: {},
+            { 
+                ...initialState,
                 gameList: [
                     {id: '0123', players: [
                         {id: '42', playerName: 'test'}
@@ -97,39 +84,36 @@ describe('reducer', () => {
             }
 
         expect(reducer(undefined, action.updateGame(data))).toStrictEqual(
-            {
-                playerName: '',
+            { 
+                ...initialState,
                 game: {
                     id: '0123',
                     players: [
                         {id: '42', playerName: 'test'}
                     ]
-                },
-                gameList: []
+                }
             }
         )
 
         expect(reducer(
             {
-                playerName: '',
+                ...initialState,
                 game: {
                     id: '4567',
                     players: [
                         {id: '24', playerName: 'alsoTest'}
                     ]
-                },
-                gameList: []
+                }
             }, action.updateGame(data)))
         .toStrictEqual(
             {
-                playerName: '',
+                ...initialState,
                 game: {
                     id: '0123',
                     players: [
                         {id: '42', playerName: 'test'}
                     ]
-                },
-                gameList: []
+                }
             }
         )
     })

@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import TetrisGrid from './TetrisGrid'
 import QuitGame from "../components/QuitGame"
 
 const Game = ({playerName, game}) => {
@@ -15,6 +16,7 @@ const Game = ({playerName, game}) => {
                 {game.players.map(player => <li key={player.id} >{player.playerName}</li>)}
             </ul>
             <QuitGame playerName={playerName} game={game} />
+            <TetrisGrid />
         </React.Fragment>
     )
 }

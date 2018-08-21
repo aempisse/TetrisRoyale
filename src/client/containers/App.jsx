@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import AppHeader from '../components/AppHeader'
 import Home from './Home'
 import Game from './Game'
 
 const App = ({game}) => {
 	return (
 		<React.Fragment>
+			<AppHeader />
 			{ Object.keys(game).length === 0 ?
 				<Home /> :
 				<Game />
@@ -13,6 +15,7 @@ const App = ({game}) => {
 		</React.Fragment>
 	)
 }
+
 
 const mapStateToProps = (state) => {
 	return {
