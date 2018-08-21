@@ -98,7 +98,7 @@ const handleDisconnect = (socket, io, socketManager, gameManager) => {
     let game = null
     while (game = gameManager.getGameBySocket(socket)) {
         gameManager.removePlayerFromGame(socket, game)
-        io.in(game.id).emit('action', action.updateGame(gameManager.getGame(data.gameId)))
+        io.in(game.id).emit('action', action.updateGame(gameManager.getGame(game.id)))
     }
     if (game !== null) {
         io.emit('action', action.updateGameList(gameManager.getGameList()))
