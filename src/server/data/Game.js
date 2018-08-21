@@ -1,6 +1,6 @@
-import Player from '../player/Player'
+import Player from './Player'
 
-export default class Game {
+class Game {
 
 	constructor(id) {
 		this.id = id
@@ -34,3 +34,5 @@ export default class Game {
     }
 
 }
+
+export default Game

@@ -1,4 +1,4 @@
-export default class Player {
+class Player {
 
     constructor(playerName, id) {
       this.playerName = playerName
@@ -7,3 +7,5 @@ export default class Player {
       this.lines = 0
     }
 }
+
+export default Player
