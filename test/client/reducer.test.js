@@ -2,7 +2,7 @@ import reducer from '../../src/client/reducers/reducer'
 import action from '../../src/client/actions/actionsCreator'
 
 describe('reducer', () => {
-    it('should return the initial state', () => {
+    test('should return the initial state', () => {
         expect(reducer(undefined, {})).toStrictEqual(
             {
                 playerName: '',
@@ -12,7 +12,7 @@ describe('reducer', () => {
         )
     })
 
-    it('should handle UPDATE_PLAYERNAME', () => {
+    test('should handle UPDATE_PLAYERNAME', () => {
         expect(reducer(undefined, action.updatePlayerName('test'))).toStrictEqual(
             {
                 playerName: 'test',
@@ -36,7 +36,7 @@ describe('reducer', () => {
         )
     })
 
-    it('should handle UPDATE_GAMELIST', () => {
+    test('should handle UPDATE_GAMELIST', () => {
         const data = [
             {id: '0123', players: [
                 {id: '42', playerName: 'test'}
@@ -87,7 +87,7 @@ describe('reducer', () => {
         )
     })
 
-    it('should handle UPDATE_GAME', () => {
+    test('should handle UPDATE_GAME', () => {
         const data =
             {
                 id: '0123',

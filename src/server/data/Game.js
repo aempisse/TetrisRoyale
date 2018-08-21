@@ -8,14 +8,13 @@ class Game {
 	}
 
     addPlayer(playerName, id) {
-        if (!playerName || !id)
+        if (!playerName || !id || this.getPlayerById(id) !== undefined)
             return undefined
-        if (this.getPlayerById(id) === undefined) {
-            const newPlayer = new Player(playerName, id)
-            this.players.push(newPlayer)
 
-            return newPlayer
-        }
+        const newPlayer = new Player(playerName, id)
+        this.players.push(newPlayer)
+
+        return newPlayer
     }
 
     removePlayer(id) {

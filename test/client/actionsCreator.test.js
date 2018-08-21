@@ -1,7 +1,7 @@
 import action from "../../src/client/actions/actionsCreator"
 
 describe('updateGameList', () => {
-    it('should create an action to update the game list', () => {
+    test('should create an action to update the game list', () => {
         const data = 'test'
         const expectedAction = {
             type: 'UPDATE_GAMELIST',
@@ -12,7 +12,7 @@ describe('updateGameList', () => {
 })
 
 describe('updatePlayerName', () => {
-    it('should create an action to update the player\'s name' , () => {
+    test('should create an action to update the player\'s name' , () => {
         const data = 'test'
         const expectedAction = {
             type: 'UPDATE_PLAYERNAME',
@@ -23,7 +23,7 @@ describe('updatePlayerName', () => {
 })
 
 describe('updateGame', () => {
-    it('should create an action to update the player\'s game', () => {
+    test('should create an action to update the player\'s game', () => {
         const data = 'test'
         const expectedAction = {
             type: 'UPDATE_GAME',
@@ -34,7 +34,7 @@ describe('updateGame', () => {
 })
 
 describe('registerPlayer', () => {
-    it('should create an action to register the player server-side' , () => {
+    test('should create an action to register the player server-side' , () => {
         const data = 'test'
         const expectedAction = {
             type: 'SERVER/REGISTER_PLAYER',
@@ -45,7 +45,7 @@ describe('registerPlayer', () => {
 })
 
 describe('createGame', () => {
-    it('should create an action to create a game server-side' , () => {
+    test('should create an action to create a game server-side' , () => {
         const data = 'test'
         const expectedAction = {
             type: 'SERVER/CREATE_GAME',
@@ -56,7 +56,7 @@ describe('createGame', () => {
 })
 
 describe('joinGame', () => {
-    it('should create an action to join a game server-side' , () => {
+    test('should create an action to join a game server-side' , () => {
         const data = 'test'
         const expectedAction = {
             type: 'SERVER/JOIN_GAME',
@@ -67,7 +67,7 @@ describe('joinGame', () => {
 })
 
 describe('quitGame', () => {
-    it('should create an action to quit a game server-side' , () => {
+    test('should create an action to quit a game server-side' , () => {
         const data = 'test'
         const expectedAction = {
             type: 'SERVER/QUIT_GAME',
@@ -78,7 +78,7 @@ describe('quitGame', () => {
 })
 
 describe('getGameList', () => {
-    it('should create an action to get the game list from server' , () => {
+    test('should create an action to get the game list from server' , () => {
         const data = 'test'
         const expectedAction = {
             type: 'SERVER/GET_GAMELIST',
