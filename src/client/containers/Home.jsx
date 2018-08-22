@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from 'redux'
 import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Grid, List, Divider } from '@material-ui/core'
+import { Paper, Grid, List, Divider, Grow } from '@material-ui/core'
 import PlayerName from './PlayerName'
 import CreateGame from '../components/CreateGame'
 import GameList from '../components/GameList'
@@ -13,17 +13,20 @@ const Home = ({getGameList, classes}) => {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={12}>
-				<Grid container className={classes.layout}>
-					<Grid item xs={12} className={classes.item}>
-						<Paper className={classes.paper}>
-							<PlayerName />
-						</Paper>
+				<Grid 
+					container
+					direction="column"
+					justify="space-evenly"
+					alignItems="center"
+					className={classes.layout}
+				>
+					<Grid item xs={12} className={classes.first}>
+						<PlayerName />
 					</Grid>
-					<Grid item xs={12} className={classes.item}>
+					<Grid item xs={12} className={classes.second}>
 						<Paper>
 							<List>
 								<CreateGame />
-								<Divider />
 								<GameList />
 							</List>
 						</Paper>
@@ -35,22 +38,30 @@ const Home = ({getGameList, classes}) => {
 }
 
 const styles = {
-    root: {
-        flexGrow: 1
+
+	root: {
+		flexGrow: 1
 	},
 	layout: {
-		direction: 'column',
-		justify: 'flex-start',
-		alignItems: 'center'
+		maxWidth: 720,
+		margin: '0 auto'
 	},
-	item: {
-		marginTop: 16
+	first: {
+		marginTop: 16,
+		paddingTop: 16,
+		paddingBottom: 16,
+		paddingLeft: 24,
+		paddingRight: 24
 	},
-	paper: {
-		paddingTop: 8,
-		paddingBottom: 8,
-		paddingLeft: 32,
-		paddingRight: 32
+	second: {
+		width: '100%',
+		marginTop: 16,
+	},
+	playerName: {
+		paddingTop: 16,
+		paddingBottom: 16,
+		paddingLeft: 24,
+		paddingRight: 24
 	}
 }
 

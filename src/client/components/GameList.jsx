@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import { withStyles } from '@material-ui/core/styles'
-import { List, ListItem, ListItemText } from '@material-ui/core'
+import { List, ListItem, ListItemText, Divider } from '@material-ui/core'
 import action from '../actions/actionsCreator'
 
 const PlayerListItem = ({player}) => {
@@ -37,14 +37,20 @@ const GameListItem = ({game, playerName, joinGame}) => {
 
 const GameList = ({gameList, playerName, joinGame}) => {
 
+    if (gameList.length === 0)
+        return (null)
+
     const list = gameList.map(game =>
             <GameListItem key={game.id} game={game} playerName={playerName} joinGame={joinGame} />
     )
 
     return (
-        <List>
-            {list}
-        </List>
+        <React.Fragment>
+            <Divider />
+            <List>
+                {list}
+            </List>
+        </React.Fragment>
     )
 }
 

@@ -23,7 +23,7 @@ const PlayerNameForm = ({registerPlayer, classes}) => {
 					input = node
 				}}
 				label='Enter your player name :'
-				helperText="it's required to create or join a game"
+				helperText="you need one to create or join a game"
 				placeholder='player name'
 				inputProps={{
 					'aria-label': 'Description',
