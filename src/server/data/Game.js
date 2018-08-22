@@ -3,7 +3,8 @@ import Player from './Player'
 class Game {
 
 	constructor(id) {
-		this.id = id
+        this.id = id
+        this.started = false
 		this.players = new Array()
 	}
 

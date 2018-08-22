@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from 'redux'
 import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import { Paper, Grid, List, Divider, Grow } from '@material-ui/core'
+import { Paper, Grid, List } from '@material-ui/core'
 import PlayerName from './PlayerName'
 import CreateGame from '../components/CreateGame'
 import GameList from '../components/GameList'
@@ -73,7 +73,7 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
 	withStyles(styles, {
-        name: 'Home',
+        name: 'Home'
     }),
 	connect(undefined, mapDispatchToProps)
 )(Home)

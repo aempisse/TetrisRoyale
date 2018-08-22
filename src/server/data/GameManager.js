@@ -55,7 +55,15 @@ class GameManager {
 	}
 
 	getGameList() {
-		return this.games
+		const gameList = this.games.map( game =>
+			({
+				...game,
+				players: game.players.map( player => 
+					({playerName: player.playerName, id: player.id})
+				)
+			}) 
+		)
+		return gameList
 	}
 
 }

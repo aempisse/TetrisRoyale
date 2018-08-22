@@ -4,7 +4,7 @@ class Player {
       this.playerName = playerName
       this.id = id
       this.score = 0
-      this.lines = 0
+      this.gridStack = Array(22).fill(Array(10).fill(0))
     }
 }
 
