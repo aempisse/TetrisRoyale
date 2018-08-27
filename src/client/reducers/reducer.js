@@ -14,6 +14,19 @@ const playerName = (state = '', action) => {
 }
 
 /**
+ * @param {Array} state 
+ * @param {object} action 
+ */
+const currentPiece = (state = [], action) => {
+	switch (action.type) {
+		case 'UPDATE_CURRENT_PIECE':
+			return action.data
+		default:
+			return state
+	}
+}
+
+/**
  * @param {object} state 
  * @param {object} action 
  */
@@ -53,6 +66,7 @@ const gameList = (state = [], action) => {
 const reducer = combineReducers({
 	playerName,
 	game,
+	currentPiece,
 	grid,
 	gameList
 })

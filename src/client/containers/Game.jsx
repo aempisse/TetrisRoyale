@@ -3,7 +3,7 @@ import { compose } from 'redux'
 import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import { Grid, Typography, List, ListItem, ListItemText, Divider } from '@material-ui/core'
-import TetrisGrid from './TetrisGrid'
+import TetrisGridContainer from './TetrisGridContainer'
 import QuitGame from "../components/QuitGame"
 
 const Game = ({playerName, game, classes}) => {
@@ -38,7 +38,7 @@ const Game = ({playerName, game, classes}) => {
                 </Grid>
             </Grid>
             <Grid item xs={8} className={classes.padding}>
-                <TetrisGrid />
+                <TetrisGridContainer />
             </Grid>
         </Grid>
     )

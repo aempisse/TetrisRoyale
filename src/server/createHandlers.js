@@ -13,6 +13,8 @@ export default (socket, io, gameManager, socketManager) => {
         data => handleJoinGame(data, socket, io, gameManager))
     socket.on('SERVER/QUIT_GAME',
         data => handleQuitGame(data, socket, io, gameManager))
+    socket.on('SERVER/GET_NEWPIECE',
+        data => handleNewPiece(data, socket, gameManager))
 
     socket.on('disconnect',
         () => handleDisconnect(socket, io, socketManager, gameManager))
@@ -90,6 +92,17 @@ const handleQuitGame = (data, socket, io, gameManager) => {
     socket.emit('action', action.updateGame({}))
     io.in(game.id).emit('action', action.updateGame(gameManager.getGame(data.gameId)))
     io.emit('action', action.updateGameList(gameManager.getGameList()))
+}
+
+
+/**
+ * @param {undefined} data
+ */
+const handleNewPiece = (data, socket, gameManager) => {
+    const game = gameManager.getGameBySocket(socket)
+    const piece = game.generatePieceForPlayer(socket.id)
+
+    socket.emit('action', action.updateCurrentPiece(piece))
 }
 
 /**

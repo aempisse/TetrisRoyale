@@ -20,11 +20,31 @@ const updatePlayerName = data => {
 }
 
 /**
+ * @param {Array} data - new piece
+ */
+const updateCurrentPiece = data => {
+    return {
+        type: 'UPDATE_CURRENT_PIECE',
+        data
+    }
+}
+
+/**
  * @param {object} data - game
  */
 const updateGame = data => {
     return {
         type: 'UPDATE_GAME',
+        data
+    }
+}
+
+/**
+ * @param {Array} data - grid
+ */
+const updateGrid = data => {
+    return {
+        type: 'UPDATE_GRID',
         data
     }
 }
@@ -81,13 +101,26 @@ const getGameList = data => {
     }
 }
 
+/**
+ * @param {undefined} data
+ */
+const getNewPiece = data => {
+    return {
+        type: 'SERVER/GET_NEWPIECE',
+        data
+    }
+}
+
 export default {
     updateGameList,
     updatePlayerName,
+    updateCurrentPiece,
     updateGame,
+    updateGrid,
     registerPlayer,
     createGame,
     joinGame,
     quitGame,
-    getGameList
+    getGameList,
+    getNewPiece
 }
