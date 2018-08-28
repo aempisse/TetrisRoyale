@@ -4,7 +4,7 @@ describe('updateGameList', () => {
     test('should create an action to update the game list', () => {
         const data = 'test'
         const expectedAction = {
-            type: 'UPDATE_GAMELIST',
+            type: 'UPDATE_GAME_LIST',
             data
         }
         expect(action.updateGameList(data)).toStrictEqual(expectedAction)
@@ -15,7 +15,7 @@ describe('updatePlayerName', () => {
     test('should create an action to update the player\'s name' , () => {
         const data = 'test'
         const expectedAction = {
-            type: 'UPDATE_PLAYERNAME',
+            type: 'UPDATE_PLAYER_NAME',
             data
         }
         expect(action.updatePlayerName(data)).toStrictEqual(expectedAction)

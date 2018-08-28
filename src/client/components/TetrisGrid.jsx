@@ -9,11 +9,13 @@ const TetrisGrid = (props) => {
         classes
     } = props
 
-    const newGrid = tools.placePieceIntoGrid(currentPiece, grid)
+    let gridToRender = grid
+    if(Object.keys(currentPiece).length !== 0)
+        gridToRender = tools.placePieceIntoGrid(currentPiece, grid)
 
     return (
         <React.Fragment>
-            {newGrid.map((line, yIndex) => yIndex > 1 &&
+            {gridToRender.map((line, yIndex) => yIndex > 1 &&
                 <Grid
                     key={yIndex}
                     container

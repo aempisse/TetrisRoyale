@@ -5,7 +5,7 @@ describe('reducer', () => {
 
     const initialState = {
         playerName: '',
-        currentPiece: [],
+        currentPiece: {},
         game: {},
         grid: Array(22).fill(Array(10).fill(0)),
         gameList: []

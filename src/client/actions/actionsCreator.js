@@ -4,7 +4,7 @@
  */
 const updateGameList = data => {
     return {
-        type: 'UPDATE_GAMELIST',
+        type: 'UPDATE_GAME_LIST',
         data
     }
 }
@@ -14,17 +14,27 @@ const updateGameList = data => {
  */
 const updatePlayerName = data => {
     return {
-        type: 'UPDATE_PLAYERNAME',
+        type: 'UPDATE_PLAYER_NAME',
         data
     }
 }
 
 /**
- * @param {Array} data - new piece
+ * @param {object} data - new piece
  */
 const updateCurrentPiece = data => {
     return {
         type: 'UPDATE_CURRENT_PIECE',
+        data
+    }
+}
+
+/**
+ * @param {object} data 
+ */
+const moveCurrentPiece = data => {
+    return {
+        type: 'MOVE_CURRENT_PIECE',
         data
     }
 }
@@ -115,6 +125,7 @@ export default {
     updateGameList,
     updatePlayerName,
     updateCurrentPiece,
+    moveCurrentPiece,
     updateGame,
     updateGrid,
     registerPlayer,

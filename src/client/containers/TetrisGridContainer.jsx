@@ -4,14 +4,32 @@ import lifecycle from 'react-pure-lifecycle'
 import { withStyles } from '@material-ui/core/styles'
 import TetrisGrid from '../components/TetrisGrid'
 import action from '../actions/actionsCreator'
-// import tools from '../tetrisTools'
+import tools from '../tetrisTools'
+
+const handleKeyPress = (event, props) => {
+    const {
+        moveCurrentPiece
+    } = props
+
+    event.preventDefault()
+    console.log(event)
+
+    switch (event.key) {
+        case 'ArrowLeft':
+            moveCurrentPiece({x: -1, y: 0})
+            break
+        case 'ArrowRight':
+            moveCurrentPiece({x: 1, y: 0})
+            break
+        case 'ArrowDown':
+            moveCurrentPiece({x: 0, y: 1})
+            break
+        default:
+            break
+    }
+}
 
 const mapStateToProps = state => {
-    // const currentPiece = state.currentPiece
-    // const currentGrid = state.grid
-
-    // const newGrid = tools.placePieceIntoGrid(currentPiece, currentGrid)
-
     return {
         grid: state.grid,
         currentPiece: state.currentPiece
@@ -21,16 +39,24 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateGrid: data => dispatch(action.updateGrid(data)),
+        // updateCurrentPiece: data => dispatch(action.updateCurrentPiece(data)),
+        moveCurrentPiece: data => dispatch(action.moveCurrentPiece(data)),
         getNewPiece: () => dispatch(action.getNewPiece())
     }
 }
 
 const componentDidMount = props => {
+    document.addEventListener('keypress', (event) => handleKeyPress(event, props))
     props.getNewPiece()
 }
 
+const componentWillUnmount = props => {
+    document.removeEventListener('keypress', handleKeyPress)
+}
+
 const methods = {
-    componentDidMount
+    componentDidMount,
+    componentWillUnmount
 }
 
 const styles = {
