@@ -4,7 +4,7 @@ import lifecycle from 'react-pure-lifecycle'
 import { withStyles } from '@material-ui/core/styles'
 import TetrisGrid from '../components/TetrisGrid'
 import action from '../actions/actionsCreator'
-import tools from '../tetrisTools'
+// import tools from '../tetrisTools'
 
 const handleKeyPress = (event, props) => {
     const {
@@ -12,7 +12,7 @@ const handleKeyPress = (event, props) => {
     } = props
 
     event.preventDefault()
-    console.log(event)
+    // console.log(event)
 
     switch (event.key) {
         case 'ArrowLeft':
@@ -61,18 +61,15 @@ const methods = {
 
 const styles = {
     cell: {
+        boxSizing: 'border-box',
         border: '0.5px solid grey',
         width: 22,
         height: 22
     },
-    empty: {
-        backgroundColor: 'inherit'
-    },
     full: {
-        border: '0.5px solid red',
-        backgroundColor: '#993339',
-        width: 22,
-        height: 22
+        border: '4px solid ',
+        borderColor: '#223345 #394A56 #394A56 #223345',
+        backgroundColor: '#2D3E50',
     }
 }
 

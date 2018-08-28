@@ -29,7 +29,8 @@ const TetrisGrid = (props) => {
                             item
                             key={xIndex}
                         >
-                            <div className={ cell === 1 ? classes.full : classes.cell }>
+                            <div className={
+                                `${classes.cell} ${cell === 1 && classes.full}`}>
                             </div>
                         </Grid>
                     )}
