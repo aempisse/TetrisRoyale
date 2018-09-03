@@ -1,11 +1,30 @@
 const placePieceIntoGrid = (piece, originalGrid) => {
     let newGrid = originalGrid.map(l => l.slice())
     piece.shape.forEach((line, yIndex) =>
-        line.forEach((cell, xIndex) =>
-            newGrid[piece.position.y + yIndex][piece.position.x + xIndex] = cell
-        )
+		line.forEach((cell, xIndex) => {
+			if (cell)
+            	newGrid[piece.position.y + yIndex][piece.position.x + xIndex] = cell
+		})
     )
     return newGrid
+}
+
+const moveIsValid = (position, piece, grid) => {
+	let isValid = true
+    piece.shape.forEach((line, yIndex) => {
+        line.forEach((cell, xIndex) => {
+            if (cell === 0)
+                return
+			if (position.x + xIndex < 0 ||
+				position.x + xIndex >= grid[0].length ||
+				position.y + yIndex < 0 ||
+				position.y + yIndex >= grid.length ||
+				grid[position.y + yIndex][position.x + xIndex]
+			)
+				isValid = false
+        })
+    })
+    return isValid
 }
 
 const movePiece = (move, piece, grid) => {
@@ -13,14 +32,9 @@ const movePiece = (move, piece, grid) => {
         x: piece.position.x + move.x,
         y: piece.position.y + move.y
     }
-    if (newPosition.x < 0 || (newPosition.x + piece.shape[0].length) > grid[0].length)
-        return piece
-
-    if (newPosition.y < 0 || (newPosition.y + piece.shape.length) > grid.length)
-        return piece
-
-    const newPiece = {...piece, position: newPosition}
-    return newPiece
+	if (!moveIsValid(newPosition, piece, grid))
+		return piece
+    return {...piece, position: newPosition}
 }
 
 export default {
