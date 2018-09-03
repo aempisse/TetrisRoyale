@@ -10,9 +10,7 @@ const handleKeyPress = (event, props) => {
     const {
         moveCurrentPiece
     } = props
-
     event.preventDefault()
-    // console.log(event)
 
     switch (event.key) {
         case 'ArrowLeft':
@@ -45,18 +43,23 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-const componentDidMount = props => {
-    document.addEventListener('keypress', (event) => handleKeyPress(event, props))
-    props.getNewPiece()
-}
+const eventClosure = () => {
+    let eventHandler
 
-const componentWillUnmount = props => {
-    document.removeEventListener('keypress', handleKeyPress)
-}
+    const componentDidMount = props => {
+        eventHandler = event => handleKeyPress(event, props)
+        document.addEventListener('keypress', eventHandler)
+        props.getNewPiece()
+    }
+    
+    const componentWillUnmount = props => {
+        document.removeEventListener('keypress', eventHandler)
+    }
 
-const methods = {
-    componentDidMount,
-    componentWillUnmount
+    return {
+        componentDidMount,
+        componentWillUnmount
+    }
 }
 
 const styles = {
@@ -67,7 +70,7 @@ const styles = {
         height: 22
     },
     full: {
-        border: '4px solid ',
+        border: '3px solid ',
         borderColor: '#223345 #394A56 #394A56 #223345',
         backgroundColor: '#2D3E50',
     }
@@ -76,7 +79,7 @@ const styles = {
 const TetrisGridContainer = compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps),
-    lifecycle(methods),
+    lifecycle(eventClosure()),
 )(TetrisGrid)
 
 export default TetrisGridContainer

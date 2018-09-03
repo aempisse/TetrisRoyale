@@ -7,7 +7,7 @@ export default class PieceGenerator {
     }
 
     generatePiece(n) {
-        let pieceId = (Math.pow(n, this.multiplier) + n * this.increment) % this.modulus
+        let pieceId = (Math.pow(n, this.multiplier) + this.increment) % this.modulus
         
         const newPiece = {
             shape: pieceShapes[pieceId],
