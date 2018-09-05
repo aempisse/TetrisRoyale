@@ -25,7 +25,24 @@ const reducerUpdateCurrentPiece = (state, action) => {
 }
 
 const reducerMoveCurrentPiece = (state, action) => {
-	return {...state, currentPiece: tools.movePiece(action.data, state.currentPiece, state.grid)}
+	if (Object.keys(state.currentPiece).length === 0)
+		return state
+	if (tools.moveIsValid(action.data, state.currentPiece, state.grid))
+		return {...state,
+			currentPiece: {
+				...state.currentPiece,
+				position: {
+					x: state.currentPiece.position.x + action.data.x,
+					y: state.currentPiece.position.y + action.data.y
+				}
+			}
+		}
+	if (action.data.y)
+		return {...state,
+			currentPiece: {},
+			grid: tools.placePieceIntoGrid(state.currentPiece, state.grid)
+		}
+	return state
 }
 
 const reducerUpdateGrid = (state, action) => {

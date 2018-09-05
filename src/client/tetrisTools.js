@@ -9,8 +9,13 @@ const placePieceIntoGrid = (piece, originalGrid) => {
     return newGrid
 }
 
-const moveIsValid = (position, piece, grid) => {
-	let isValid = true
+const moveIsValid = (move, piece, grid) => {
+    let isValid = true
+    const position = {
+        x: piece.position.x + move.x,
+        y: piece.position.y + move.y
+    }
+
     piece.shape.forEach((line, yIndex) => {
         line.forEach((cell, xIndex) => {
             if (cell === 0)
@@ -27,17 +32,18 @@ const moveIsValid = (position, piece, grid) => {
     return isValid
 }
 
-const movePiece = (move, piece, grid) => {
-    const newPosition = {
-        x: piece.position.x + move.x,
-        y: piece.position.y + move.y
-    }
-	if (!moveIsValid(newPosition, piece, grid))
-		return piece
-    return {...piece, position: newPosition}
-}
+// const movePiece = (move, piece, grid) => {
+//     const newPosition = {
+//         x: piece.position.x + move.x,
+//         y: piece.position.y + move.y
+//     }
+// 	if (moveIsValid(newPosition, piece, grid))
+//         return {...piece, position: newPosition}
+
+//     return piece
+// }
 
 export default {
     placePieceIntoGrid,
-    movePiece
+    moveIsValid
 }

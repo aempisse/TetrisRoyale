@@ -10,7 +10,7 @@ const updateGameList = data => {
 }
 
 /**
- * @param {string} data - playerName 
+ * @param {string} data - playerName
  */
 const updatePlayerName = data => {
     return {
@@ -30,7 +30,7 @@ const updateCurrentPiece = data => {
 }
 
 /**
- * @param {object} data 
+ * @param {object} data
  */
 const moveCurrentPiece = data => {
     return {
@@ -81,7 +81,7 @@ const createGame = data => {
 
 /**
  * @param {string} data.playerName - playerName
- * @param {string} data.gameId - gameId 
+ * @param {string} data.gameId - gameId
  */
 const joinGame = data => {
     return {
@@ -92,7 +92,7 @@ const joinGame = data => {
 
 /**
  * @param {string} data.playerName - playerName
- * @param {string} data.gameId - gameId 
+ * @param {string} data.gameId - gameId
  */
 const quitGame = data => {
     return {
@@ -121,6 +121,16 @@ const getNewPiece = data => {
     }
 }
 
+/**
+ * @param {array} data - updatedGrid
+ */
+const anchorPiece = data => {
+    return {
+        type: 'SERVER/ANCHOR_PIECE',
+        data
+    }
+}
+
 export default {
     updateGameList,
     updatePlayerName,
@@ -133,5 +143,6 @@ export default {
     joinGame,
     quitGame,
     getGameList,
-    getNewPiece
+    getNewPiece,
+    anchorPiece
 }

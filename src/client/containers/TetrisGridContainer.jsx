@@ -4,22 +4,24 @@ import lifecycle from 'react-pure-lifecycle'
 import { withStyles } from '@material-ui/core/styles'
 import TetrisGrid from '../components/TetrisGrid'
 import action from '../actions/actionsCreator'
-// import tools from '../tetrisTools'
+import tools from '../tetrisTools'
 
 const handleKeyPress = (event, props) => {
     const {
         moveCurrentPiece
     } = props
-    event.preventDefault()
 
     switch (event.key) {
         case 'ArrowLeft':
+            event.preventDefault()
             moveCurrentPiece({x: -1, y: 0})
             break
         case 'ArrowRight':
+            event.preventDefault()
             moveCurrentPiece({x: 1, y: 0})
             break
         case 'ArrowDown':
+            event.preventDefault()
             moveCurrentPiece({x: 0, y: 1})
             break
         default:
@@ -37,27 +39,40 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         updateGrid: data => dispatch(action.updateGrid(data)),
-        // updateCurrentPiece: data => dispatch(action.updateCurrentPiece(data)),
         moveCurrentPiece: data => dispatch(action.moveCurrentPiece(data)),
-        getNewPiece: () => dispatch(action.getNewPiece())
+        getNewPiece: () => dispatch(action.getNewPiece()),
+        anchorPiece: data => dispatch(action.anchorPiece(data))
     }
 }
 
-const eventClosure = () => {
+const lifecycleClosure = () => {
     let eventHandler
+    let interval
 
     const componentDidMount = props => {
         eventHandler = event => handleKeyPress(event, props)
         document.addEventListener('keypress', eventHandler)
+        interval = window.setInterval(() => {
+            props.moveCurrentPiece({x: 0, y: 1})
+        }, 500)
         props.getNewPiece()
     }
-    
+
+    const componentDidUpdate = (props, oldProps) => {
+        if (props.grid !== oldProps.grid)
+            props.anchorPiece(props.grid)
+        if (Object.keys(props.currentPiece).length === 0)
+            props.getNewPiece()
+    }
+
     const componentWillUnmount = props => {
         document.removeEventListener('keypress', eventHandler)
+        clearInterval(interval)
     }
 
     return {
         componentDidMount,
+        componentDidUpdate,
         componentWillUnmount
     }
 }
@@ -79,7 +94,7 @@ const styles = {
 const TetrisGridContainer = compose(
     withStyles(styles),
     connect(mapStateToProps, mapDispatchToProps),
-    lifecycle(eventClosure()),
+    lifecycle(lifecycleClosure()),
 )(TetrisGrid)
 
 export default TetrisGridContainer
