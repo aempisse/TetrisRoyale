@@ -1,10 +1,11 @@
-import tools from '../tetrisTools'
+import tools from '../tools/tetriminoMoves'
+import generatePermutedBag from '../tools/generatePermutedBag'
 
 const initialState = {
 	playerName: '',
 	gameList: [],
 	game: {},
-	currentPiece: {},
+	tetriminoes: [],
 	grid: Array(22).fill(Array(10).fill(0)),
 }
 
@@ -20,27 +21,37 @@ const reducerUpdateGame = (state, action) => {
 	return {...state, game: action.data}
 }
 
-const reducerUpdateCurrentPiece = (state, action) => {
-	return {...state, currentPiece: action.data}
+const reducerGenerateNewTetriminoes = (state, action) => {
+	return {...state,
+		tetriminoes: state.tetriminoes.concat(generatePermutedBag())
+	}
 }
 
 const reducerMoveCurrentPiece = (state, action) => {
-	if (Object.keys(state.currentPiece).length === 0)
+	if (state.tetriminoes.length === 0)
 		return state
-	if (tools.moveIsValid(action.data, state.currentPiece, state.grid))
+	if (tools.moveIsValid(action.data, state.tetriminoes[0], state.grid)) {
+		let updatedTetriminoes = state.tetriminoes.map(tetrimino => ({...tetrimino}))
+		updatedTetriminoes[0].position.x += action.data.x
+		updatedTetriminoes[0].position.y += action.data.y
 		return {...state,
-			currentPiece: {
-				...state.currentPiece,
-				position: {
-					x: state.currentPiece.position.x + action.data.x,
-					y: state.currentPiece.position.y + action.data.y
-				}
-			}
+			tetriminoes: updatedTetriminoes
 		}
+	}
 	if (action.data.y)
 		return {...state,
-			currentPiece: {},
-			grid: tools.placePieceIntoGrid(state.currentPiece, state.grid)
+			tetriminoes: state.tetriminoes.slice(1),
+			grid: tools.placePieceIntoGrid(state.tetriminoes[0], state.grid)
+		}
+	return state
+}
+
+const reducerRotateCurrentPiece = (state, action) => {
+	if (state.tetriminoes.length === 0)
+		return state
+	if (rotatedPiece = tools.rotate(state.tetriminoes[0], state.grid))
+		return {...state,
+			currentPiece: rotatedPiece
 		}
 	return state
 }
@@ -57,10 +68,12 @@ const reducer = (state = initialState, action) => {
 			return reducerUpdateGameList(state, action)
 		case 'UPDATE_GAME':
 			return reducerUpdateGame(state, action)
-		case 'UPDATE_CURRENT_PIECE':
-			return reducerUpdateCurrentPiece(state, action)
+		case 'GENERATE_NEW_TETRIMINOES':
+			return reducerGenerateNewTetriminoes(state, action)
 		case 'MOVE_CURRENT_PIECE':
 			return reducerMoveCurrentPiece(state, action)
+		// case 'ROTATE_CURRENT_PIECE':
+		// 	return reducerRotateCurrentPiece(state, action)
 		case 'UPDATE_GRID':
 			return reducerUpdateGrid(state, action)
 		default:

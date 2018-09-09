@@ -13,8 +13,8 @@ export default (socket, io, gameManager, socketManager) => {
         data => handleJoinGame(data, socket, io, gameManager))
     socket.on('SERVER/QUIT_GAME',
         data => handleQuitGame(data, socket, io, gameManager))
-    socket.on('SERVER/GET_NEWPIECE',
-        data => handleNewPiece(data, socket, gameManager))
+    // socket.on('SERVER/GET_NEWPIECE',
+    //     data => handleNewPiece(data, socket, gameManager))
 
     socket.on('disconnect',
         () => handleDisconnect(socket, io, socketManager, gameManager))
@@ -95,15 +95,15 @@ const handleQuitGame = (data, socket, io, gameManager) => {
 }
 
 
-/**
- * @param {undefined} data
- */
-const handleNewPiece = (data, socket, gameManager) => {
-    const game = gameManager.getGameBySocket(socket)
-    const piece = game.generatePieceForPlayer(socket.id)
+// /**
+//  * @param {undefined} data
+//  */
+// const handleNewPiece = (data, socket, gameManager) => {
+//     const game = gameManager.getGameBySocket(socket)
+//     const piece = game.generatePieceForPlayer(socket.id)
 
-    socket.emit('action', action.updateCurrentPiece(piece))
-}
+//     socket.emit('action', action.updateCurrentPiece(piece))
+// }
 
 /**
  */

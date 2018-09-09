@@ -5,7 +5,7 @@ describe('reducer', () => {
 
     const initialState = {
         playerName: '',
-        currentPiece: {},
+        tetriminoes: [],
         game: {},
         grid: Array(22).fill(Array(10).fill(0)),
         gameList: []
@@ -38,7 +38,7 @@ describe('reducer', () => {
         ]
 
         expect(reducer(undefined, action.updateGameList(data))).toStrictEqual(
-            { 
+            {
                 ...initialState,
                 gameList: [
                     {id: '0123', players: [
@@ -52,7 +52,7 @@ describe('reducer', () => {
         )
 
         expect(reducer(
-            { 
+            {
                 ... initialState,
                 gameList: [
                     {id: '0123', players: [
@@ -61,7 +61,7 @@ describe('reducer', () => {
                 ]
             }, action.updateGameList(data)))
         .toStrictEqual(
-            { 
+            {
                 ...initialState,
                 gameList: [
                     {id: '0123', players: [
@@ -85,7 +85,7 @@ describe('reducer', () => {
             }
 
         expect(reducer(undefined, action.updateGame(data))).toStrictEqual(
-            { 
+            {
                 ...initialState,
                 game: {
                     id: '0123',

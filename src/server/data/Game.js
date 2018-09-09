@@ -1,5 +1,4 @@
 import Player from './Player'
-import PieceGenerator from './PieceGenerator'
 
 class Game {
 
@@ -7,7 +6,6 @@ class Game {
         this.id = id
         this.started = false
         this.players = new Array()
-        this.pieceGenerator = new PieceGenerator()
 	}
 
     addPlayer(playerName, id) {
@@ -31,15 +29,15 @@ class Game {
     getPlayerById(id) {
         if (!id)
             return undefined
-            
+
         return this.players.find(player => player.id === id)
     }
 
-    generatePieceForPlayer(id) {
-        const player = this.getPlayerById(id)
-        const piece = this.pieceGenerator.generatePiece(player.pieceIndex++)
-        return piece
-    }
+    // generatePieceForPlayer(id) {
+    //     const player = this.getPlayerById(id)
+    //     const piece = this.pieceGenerator.generatePiece(player.pieceIndex++)
+    //     return piece
+    // }
 
 }
 

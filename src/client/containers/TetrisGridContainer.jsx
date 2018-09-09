@@ -4,11 +4,12 @@ import lifecycle from 'react-pure-lifecycle'
 import { withStyles } from '@material-ui/core/styles'
 import TetrisGrid from '../components/TetrisGrid'
 import action from '../actions/actionsCreator'
-import tools from '../tetrisTools'
+import tools from '../tools/tetriminoMoves'
 
 const handleKeyPress = (event, props) => {
     const {
-        moveCurrentPiece
+        moveCurrentPiece,
+        rotateCurrentPiece
     } = props
 
     switch (event.key) {
@@ -24,6 +25,10 @@ const handleKeyPress = (event, props) => {
             event.preventDefault()
             moveCurrentPiece({x: 0, y: 1})
             break
+        case 'ArrowUp':
+            event.preventDefault()
+            rotateCurrentPiece()
+            break
         default:
             break
     }
@@ -32,14 +37,15 @@ const handleKeyPress = (event, props) => {
 const mapStateToProps = state => {
     return {
         grid: state.grid,
-        currentPiece: state.currentPiece
+        tetriminoes: state.tetriminoes
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateGrid: data => dispatch(action.updateGrid(data)),
+        generateNewTetriminoes: () => dispatch(action.generateNewTetriminoes()),
         moveCurrentPiece: data => dispatch(action.moveCurrentPiece(data)),
+        rotateCurrentPiece: () => dispatch(action.rotateCurrentPiece()),
         getNewPiece: () => dispatch(action.getNewPiece()),
         anchorPiece: data => dispatch(action.anchorPiece(data))
     }
@@ -55,14 +61,20 @@ const lifecycleClosure = () => {
         interval = window.setInterval(() => {
             props.moveCurrentPiece({x: 0, y: 1})
         }, 500)
-        props.getNewPiece()
+        props.generateNewTetriminoes()
     }
 
     const componentDidUpdate = (props, oldProps) => {
         if (props.grid !== oldProps.grid)
             props.anchorPiece(props.grid)
-        if (Object.keys(props.currentPiece).length === 0)
-            props.getNewPiece()
+        if (props.tetriminoes[0] !== oldProps.tetriminoes[0]) {
+            clearInterval(interval)
+            interval = window.setInterval(() => {
+                props.moveCurrentPiece({x: 0, y: 1})
+            }, 500)
+        }
+        if (props.tetriminoes.length <= 5)
+            props.generateNewTetriminoes()
     }
 
     const componentWillUnmount = props => {

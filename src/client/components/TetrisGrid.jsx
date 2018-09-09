@@ -1,17 +1,18 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import tools from '../tetrisTools'
+import tools from '../tools/tetriminoMoves'
 
 const TetrisGrid = (props) => {
     const {
         grid,
-        currentPiece,
+        tetriminoes,
         classes
     } = props
 
     let gridToRender = grid
-    if(Object.keys(currentPiece).length !== 0)
-        gridToRender = tools.placePieceIntoGrid(currentPiece, grid)
+    if(tetriminoes.length !== 0) {
+        gridToRender = tools.placePieceIntoGrid(tetriminoes[0], grid)
+    }
 
     return (
         <React.Fragment>
@@ -24,7 +25,7 @@ const TetrisGrid = (props) => {
                     justify="center"
                     className={classes.line}
                 >
-                    {line.map((cell, xIndex) => 
+                    {line.map((cell, xIndex) =>
                         <Grid
                             item
                             key={xIndex}
