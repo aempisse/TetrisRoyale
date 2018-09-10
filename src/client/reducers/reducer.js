@@ -27,7 +27,7 @@ const reducerGenerateNewTetriminoes = (state, action) => {
 	}
 }
 
-const reducerMoveCurrentPiece = (state, action) => {
+const reducerMoveTetrimino = (state, action) => {
 	if (state.tetriminoes.length === 0)
 		return state
 	if (tools.moveIsValid(action.data, state.tetriminoes[0], state.grid)) {
@@ -41,18 +41,23 @@ const reducerMoveCurrentPiece = (state, action) => {
 	if (action.data.y)
 		return {...state,
 			tetriminoes: state.tetriminoes.slice(1),
-			grid: tools.placePieceIntoGrid(state.tetriminoes[0], state.grid)
+			grid: tools.placeTetriminoIntoGrid(state.tetriminoes[0], state.grid)
 		}
 	return state
 }
 
-const reducerRotateCurrentPiece = (state, action) => {
-	if (state.tetriminoes.length === 0)
+const reducerRotateTetrimino = (state, action) => {
+	if (state.tetriminoes.length === 0 ||
+		state.tetriminoes[0].type === 'O')
 		return state
-	if (rotatedPiece = tools.rotate(state.tetriminoes[0], state.grid))
+	const rotatedTetrimino = tools.rotate(state.tetriminoes[0], state.grid)
+	if (rotatedTetrimino.rotation !== state.tetriminoes[0].rotation) {
+		let updatedTetriminoes = state.tetriminoes.map(tetrimino => ({...tetrimino}))
+		updatedTetriminoes[0] = rotatedTetrimino
 		return {...state,
-			currentPiece: rotatedPiece
+			tetriminoes: updatedTetriminoes
 		}
+	}
 	return state
 }
 
@@ -70,10 +75,10 @@ const reducer = (state = initialState, action) => {
 			return reducerUpdateGame(state, action)
 		case 'GENERATE_NEW_TETRIMINOES':
 			return reducerGenerateNewTetriminoes(state, action)
-		case 'MOVE_CURRENT_PIECE':
-			return reducerMoveCurrentPiece(state, action)
-		// case 'ROTATE_CURRENT_PIECE':
-		// 	return reducerRotateCurrentPiece(state, action)
+		case 'MOVE_TETRIMINO':
+			return reducerMoveTetrimino(state, action)
+		case 'ROTATE_TETRIMINO':
+			return reducerRotateTetrimino(state, action)
 		case 'UPDATE_GRID':
 			return reducerUpdateGrid(state, action)
 		default:

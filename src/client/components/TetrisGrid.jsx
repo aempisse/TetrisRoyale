@@ -11,7 +11,10 @@ const TetrisGrid = (props) => {
 
     let gridToRender = grid
     if(tetriminoes.length !== 0) {
-        gridToRender = tools.placePieceIntoGrid(tetriminoes[0], grid)
+        if (!tools.moveIsValid({x: 0, y: 0}, tetriminoes[0], grid))
+            alert('OVERFLOW')
+        else
+            gridToRender = tools.placeTetriminoIntoGrid(tetriminoes[0], grid)
     }
 
     return (

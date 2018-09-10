@@ -19,16 +19,10 @@ const updatePlayerName = data => {
     }
 }
 
-/**
- * @param {object} data - new piece
- */
-const updateCurrentPiece = data => {
-    return {
-        type: 'UPDATE_CURRENT_PIECE',
-        data
-    }
-}
 
+/**
+ * @param {undefined} data
+ */
 const generateNewTetriminoes = data => {
     return {
         type: 'GENERATE_NEW_TETRIMINOES',
@@ -39,9 +33,9 @@ const generateNewTetriminoes = data => {
 /**
  * @param {object} data - move {x, y}
  */
-const moveCurrentPiece = data => {
+const moveTetrimino = data => {
     return {
-        type: 'MOVE_CURRENT_PIECE',
+        type: 'MOVE_TETRIMINO',
         data
     }
 }
@@ -49,9 +43,9 @@ const moveCurrentPiece = data => {
 /**
  * @param {undefined} data
  */
-const rotateCurrentPiece = data => {
+const rotateTetrimino = data => {
     return {
-        type: 'ROTATE_CURRENT_PIECE',
+        type: 'ROTATE_TETRIMINO',
         data
     }
 }
@@ -128,22 +122,12 @@ const getGameList = data => {
     }
 }
 
-// /**
-//  * @param {undefined} data
-//  */
-// const getNewPiece = data => {
-//     return {
-//         type: 'SERVER/GET_NEWPIECE',
-//         data
-//     }
-// }
-
 /**
  * @param {array} data - updatedGrid
  */
-const anchorPiece = data => {
+const anchorTetrimino = data => {
     return {
-        type: 'SERVER/ANCHOR_PIECE',
+        type: 'SERVER/ANCHOR_TETRIMINO',
         data
     }
 }
@@ -151,10 +135,9 @@ const anchorPiece = data => {
 export default {
     updateGameList,
     updatePlayerName,
-    updateCurrentPiece, // change flow management ?
     generateNewTetriminoes,
-    moveCurrentPiece,
-    updateCurrentPiece,
+    moveTetrimino,
+    rotateTetrimino,
     updateGame,
     updateGrid,
     registerPlayer, // remove ?
@@ -162,6 +145,5 @@ export default {
     joinGame,
     quitGame,
     getGameList,
-    // getNewPiece,
-    anchorPiece
+    anchorTetrimino
 }

@@ -1,23 +1,25 @@
-const placePieceIntoGrid = (piece, originalGrid) => {
+import tetriminoShapes from './tetriminoShapes'
+
+const placeTetriminoIntoGrid = (tetrimino, originalGrid) => {
     let newGrid = originalGrid.map(l => l.slice())
-    piece.shape.forEach((line, yIndex) =>
+    tetrimino.shape.forEach((line, yIndex) =>
 		line.forEach((cell, xIndex) => {
 			if (cell)
-            	newGrid[piece.position.y + yIndex][piece.position.x + xIndex] = cell
+            	newGrid[tetrimino.position.y + yIndex][tetrimino.position.x + xIndex] = cell
 		})
     )
     return newGrid
 }
 
-const moveIsValid = (move, piece, grid) => {
+const moveIsValid = (move, tetrimino, grid) => {
     const position = {
-        x: piece.position.x + move.x,
-        y: piece.position.y + move.y
+        x: tetrimino.position.x + move.x,
+        y: tetrimino.position.y + move.y
     }
 
-    for (let yIndex = 0; yIndex < piece.shape.length; yIndex++) {
-        for (let xIndex = 0; xIndex < piece.shape[yIndex].length; xIndex++) {
-            if (piece.shape[yIndex][xIndex] === 0)
+    for (let yIndex = 0; yIndex < tetrimino.shape.length; yIndex++) {
+        for (let xIndex = 0; xIndex < tetrimino.shape[yIndex].length; xIndex++) {
+            if (tetrimino.shape[yIndex][xIndex] === 0)
                 break
             if (position.x + xIndex < 0 ||
                 position.x + xIndex >= grid[0].length ||
@@ -31,12 +33,99 @@ const moveIsValid = (move, piece, grid) => {
     return true
 }
 
-const rotatePiece = (piece, grid) => {
-    return piece
+const testWallKicks = (tetrimino, grid, tests) => {
+    for (let i = 0; i < tests.length; i++) {
+        if (moveIsValid(tests[i], tetrimino, grid))
+            return {...tetrimino,
+                position: {
+                    x: tetrimino.position.x + tests[i].x,
+                    y: tetrimino.position.y + tests[i].y
+                }
+            }
+    }
+    return undefined
+}
+
+const rotate = (tetrimino, grid) => {
+    const newRotation = (tetrimino.rotation + 1) % 4
+    const rotatedTetrimino = {
+        type: tetrimino.type,
+        shape: tetriminoShapes[tetrimino.type][newRotation],
+        position: tetrimino.position,
+        rotation: newRotation
+    }
+
+    if (tetrimino.type === 'I' && tetrimino.rotation === 0)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: -2, y: 0},
+            {x: 1, y: 0},
+            {x: -2, y: 1},
+            {x: 1, y: -2}
+        ]) || tetrimino)
+    if (tetrimino.type === 'I' && tetrimino.rotation === 1)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: -1, y: 0},
+            {x: 2, y: 0},
+            {x: -1, y: -2},
+            {x: 2, y: 1}
+        ]) || tetrimino)
+    if (tetrimino.type === 'I' && tetrimino.rotation === 2)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: 2, y: 0},
+            {x: -1, y: 0},
+            {x: 2, y: -1},
+            {x: -1, y: 2}
+        ]) || tetrimino)
+    if (tetrimino.type === 'I' && tetrimino.rotation === 3)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: 1, y: 0},
+            {x: -2, y: 0},
+            {x: 1, y: 2},
+            {x: -2, y: -1}
+        ]) || tetrimino)
+
+    if (tetrimino.rotation === 0)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: -1, y: 0},
+            {x: -1, y: 1},
+            {x: 0, y: 2},
+            {x: -1, y: -2}
+        ]) || tetrimino)
+    if (tetrimino.rotation === 1)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: 1, y: 0},
+            {x: 1, y: 1},
+            {x: 0, y: -2},
+            {x: 1, y: 2}
+        ]) || tetrimino)
+    if (tetrimino.rotation === 2)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: 1, y: 0},
+            {x: 1, y: -1},
+            {x: 0, y: 2},
+            {x: 1, y: 2}
+        ]) || tetrimino)
+    if (tetrimino.rotation === 3)
+        return (testWallKicks(rotatedTetrimino, grid, [
+            {x: 0, y: 0},
+            {x: -1, y: 0},
+            {x: -1, y: 1},
+            {x: 0, y: -2},
+            {x: -1, y: -2}
+        ]) || tetrimino)
+
+    return tetrimino
 }
 
 export default {
-    placePieceIntoGrid,
+    placeTetriminoIntoGrid,
     moveIsValid,
-    rotatePiece
+    rotate
 }
