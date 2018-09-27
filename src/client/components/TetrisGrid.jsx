@@ -10,12 +10,8 @@ const TetrisGrid = (props) => {
     } = props
 
     let gridToRender = grid
-    if(tetriminoes.length !== 0) {
-        if (!tools.moveIsValid({x: 0, y: 0}, tetriminoes[0], grid))
-            alert('OVERFLOW')
-        else
-            gridToRender = tools.placeTetriminoIntoGrid(tetriminoes[0], grid)
-    }
+    if(tetriminoes.length !== 0)
+        gridToRender = tools.placeTetriminoIntoGrid(tetriminoes[0], grid)
 
     return (
         <React.Fragment>

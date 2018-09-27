@@ -20,13 +20,17 @@ const moveIsValid = (move, tetrimino, grid) => {
     for (let yIndex = 0; yIndex < tetrimino.shape.length; yIndex++) {
         for (let xIndex = 0; xIndex < tetrimino.shape[yIndex].length; xIndex++) {
             if (tetrimino.shape[yIndex][xIndex] === 0)
-                break
+                continue
             if (position.x + xIndex < 0 ||
                 position.x + xIndex >= grid[0].length ||
                 position.y + yIndex < 0 ||
                 position.y + yIndex >= grid.length ||
-                grid[position.y + yIndex][position.x + xIndex]
+                grid[position.y + yIndex][position.x + xIndex] !== 0
             )
+            // if (grid.indexOf(position.y + yIndex) === -1 ||
+            //     grid[position.y + yIndex].indexOf(position.x + xIndex) === -1 ||
+            //     grid[position.y + yIndex][position.x + xIndex] !== 0
+            // )
                 return false
         }
     }
